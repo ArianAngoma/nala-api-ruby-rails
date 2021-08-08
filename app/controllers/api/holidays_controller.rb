@@ -38,6 +38,24 @@ module Api
       end
     end
 
+    # Actualizar vacación por ID
+    def update
+      holiday = Holiday.find(params[:id])
+      if holiday.update(holiday_params)
+        render json: {
+          status: 'OK',
+          message: 'Vacación actualizado',
+          data: holiday
+        }, status: :ok
+      else
+        render json: {
+          status: 'ERROR',
+          message: 'Vacación no actualizado',
+          data: holiday.errors
+        }, status: :unprocessable_entity
+      end
+    end
+
     # Eliminar vacación por ID
     def destroy
       holiday = Holiday.find(params[:id])

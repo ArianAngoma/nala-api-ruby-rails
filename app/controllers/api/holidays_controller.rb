@@ -19,5 +19,28 @@ module Api
         data: holiday
       }, status: :ok
     end
+
+    # Crear vacación
+    def create
+      holiday = Holiday.new(holiday_params)
+      if holiday.save
+        render json: {
+          status: 'OK',
+          message: 'Vacación guardada',
+          data: holiday
+        }, status: :ok
+      else
+        render json: {
+          status: 'ERROR',
+          message: 'Vacación no guardado',
+          data: holiday.errors
+        }, status: :unprocessable_entity
+      end
+    end
+    # Parametros para crear vacación
+    private
+    def holiday_params
+      params.permit(:name, :startDate, :endDate)
+    end
   end
 end

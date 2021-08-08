@@ -37,6 +37,25 @@ module Api
         }, status: :unprocessable_entity
       end
     end
+
+    # Eliminar vacación por ID
+    def destroy
+      holiday = Holiday.find(params[:id])
+      if holiday.destroy
+        render json: {
+          status: 'OK',
+          message: 'Vacación eliminada',
+          data: holiday
+        }, status: :ok
+      else
+        render json: {
+          status: 'ERROR',
+          message: 'Vacación no eliminada',
+          data: holiday.errors
+        }, status: :unprocessable_entity
+      end
+    end
+
     # Parametros para crear vacación
     private
     def holiday_params
